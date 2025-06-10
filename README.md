@@ -3,6 +3,8 @@
 </p>
 
 ---
+# Quick Note - PLEASE READ
+Hi! This project is a fork of the original Pensela repo (obviously) - I'll be uploading bugfixes and features here :)
 
 # Pensela: The Swiss Army Knife of Screen Annotation Tools
 

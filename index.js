@@ -1,3 +1,8 @@
+// I'll comment this code a bit cos going through it originally was a pita
+// notice the setTimeout function thing - this is weird and i will rename it. it confused me
+// it is necessary though, it kinda kickstarts everything
+// also, the screenshot stuff is a bit weird, but it works so i left it alone
+
 const { app, BrowserWindow, ipcMain, screen } = require("electron");
 const os = require("os");
 const path = require("path");
@@ -5,53 +10,45 @@ const fs = require("fs");
 const screenshot = require("screenshot-desktop");
 
 function createWindow() {
-	const board = new BrowserWindow({
-		x: Math.min(...screen.getAllDisplays().map((j) => j.workArea.x)),
-		y: Math.min(...screen.getAllDisplays().map((j) => j.workArea.y)),
-		width:
-			Math.max(
-				...screen
-					.getAllDisplays()
-					.map((j) => j.workArea.x + j.workArea.width)
-			) - Math.min(...screen.getAllDisplays().map((j) => j.workArea.x)),
-		height:
-			Math.max(
-				...screen
-					.getAllDisplays()
-					.map((j) => j.workArea.y + j.workArea.height)
-			) - Math.min(...screen.getAllDisplays().map((j) => j.workArea.y)),
-		enableLargerThanScreen: true,
-		webPreferences: {
-			nodeIntegration: true,
-			devTools: true,
-			contextIsolation: false,
-		},
-		transparent: true,
-		frame: false,
-		icon: path.join(__dirname, "/assets/Icon-512x512.png"),
-	});
-	board.setAlwaysOnTop(true, "screen");
-	board.loadFile("board.html");
+// fairly obvious just gets all displays - returns an array
+const displays = screen.getAllDisplays();
+// getting bounds of each display
+const x = Math.min(...displays.map((d) => d.bounds.x));
+const y = Math.min(...displays.map((d) => d.bounds.y));
+
+const maxRight = Math.max(...displays.map((d) => d.bounds.x + d.bounds.width));
+const maxBottom = Math.max(...displays.map((d) => d.bounds.y + d.bounds.height));
+
+const width = maxRight - x;
+const height = maxBottom - y;
+
+// After computing global bounds, log for debugging
+console.log('Computed board bounds:', { x, y, width, height });
+//now we create the main board window over all displays
+const board = new BrowserWindow({
+	x,
+	y,
+	width,
+	height,
+	enableLargerThanScreen: true,
+	webPreferences: {
+		nodeIntegration: true,
+		devTools: true,
+		contextIsolation: false,
+	},
+	transparent: true,
+	frame: false,
+	icon: path.join(__dirname, "/assets/Icon-512x512.png"),
+});
+console.log('Board window created');
+board.loadFile("board.html");
 	board.setResizable(false);
 
 	setTimeout(() => {
-		board.setSize(
-			Math.max(
-				...screen
-					.getAllDisplays()
-					.map((j) => j.workArea.x + j.workArea.width)
-			) - Math.min(...screen.getAllDisplays().map((j) => j.workArea.x)),
-			Math.max(
-				...screen
-					.getAllDisplays()
-					.map((j) => j.workArea.y + j.workArea.height)
-			) - Math.min(...screen.getAllDisplays().map((j) => j.workArea.y))
-		);
-		board.setPosition(
-			Math.min(...screen.getAllDisplays().map((j) => j.workArea.x)),
-			Math.min(...screen.getAllDisplays().map((j) => j.workArea.y))
-		);
-	}, 10);
+	// Use setBounds again
+	console.log('Applying bounds via setBounds:', { x, y, width, height });
+	board.setBounds({ x, y, width, height }, true);
+}, 10);
 
 	const controller = new BrowserWindow({
 		width: Math.floor(
