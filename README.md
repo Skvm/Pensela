@@ -5,6 +5,7 @@
 ---
 # Quick Note - PLEASE READ
 Hi! This project is a fork of the original Pensela repo (obviously) - I'll be uploading bugfixes and features here :)
+Changelog since the original project can be found below.
 
 # Pensela: The Swiss Army Knife of Screen Annotation Tools
 
@@ -85,3 +86,17 @@ Feel free to report an issue or request a feature in the Issues Section.
 ## License
 
 Distributed under the ISC License.
+
+# Changelog
+
+All notable changes to Pensela since I forked the project will be documented here.
+
+
+## [V1.2.6] - 2025-06-11
+
+### Added
+- Multi-monitor support has been added (or fixed?) (2025-06-10)
+
+### Fixed
+- Screenshot functionality issues resolved by implementing custom fork of `screenshot-desktop`
+- Updated dependencies to use forked version
