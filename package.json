@@ -1,6 +1,6 @@
 {
 	"name": "pensela",
-	"version": "1.2.5",
+	"version": "1.2.6",
 	"description": "The Swiss Army Knife of Screen Annotation Tools",
 	"main": "index.js",
 	"scripts": {
@@ -23,10 +23,15 @@
 	"dependencies": {
 		"jquery": "^3.6.0",
 		"konva": "^7.2.5",
-		"screenshot-desktop": "^1.12.3"
+		"screenshot-desktop": "github:skvm/screenshot-desktop"
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/weiameili/Pensela"
-	}
+		"url": "https://github.com/skvm/Pensela"
+	},
+	"build":{
+    "asarUnpack": [
+      "node_modules/screenshot-desktop/lib/win32"
+    ]
+  }
 }

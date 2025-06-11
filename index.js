@@ -1,7 +1,8 @@
 // I'll comment this code a bit cos going through it originally was a pita
 // notice the setTimeout function thing - this is weird and i will rename it. it confused me
 // it is necessary though, it kinda kickstarts everything
-// also, the screenshot stuff is a bit weird, but it works so i left it alone
+
+// screenshots are using a forked version of screenshot-desktop as i needed to make a small tweak
 
 const { app, BrowserWindow, ipcMain, screen } = require("electron");
 const os = require("os");

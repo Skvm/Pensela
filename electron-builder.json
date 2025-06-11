@@ -6,6 +6,10 @@
 	},
 	"win": {
 		"target": ["nsis", "zip"],
+		"extraResources": [
+        "node_modules/screenshot-desktop/lib/win32/screenCapture_1.3.2.bat",
+        "node_modules/screenshot-desktop/lib/win32/app.manifest"
+      	],
 		"icon": "./assets/logo.ico"
 	},
 	"nsis": {
